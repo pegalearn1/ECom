@@ -11,9 +11,13 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+TEMPLATES_DIR = os.path.join(BASE_DIR, 'store/templates')
+STATIC_DIRS =  os.path.join(BASE_DIR, 'static')
+STATIC_FILES =  os.path.join(BASE_DIR, 'staticfiles')
 
 
 # Quick-start development settings - unsuitable for production
@@ -37,24 +41,53 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'store', #By User
+     'rosetta', #By User
+    'rest_framework', #By User
+     'crispy_forms', #By User
+     'debug_toolbar', #By User
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware', #by User for language change
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware', #debug toolbar
+    
 ]
+
+
+
+
+#HTTP Settings 
+
+# SESSION_COOKIE_AGE = 30
+# SESSION_COOKIE_SECURE = True  #Production
+# CSRF_COOKIE_SECURE = True     #Production
+# SECURE_SSL_REDIRECT = True    #Production
+
+#HSTS Settings
+
+# SECURE_HSTS_SECONDS = 31536000 #1 year #Production
+# SECURE_HSTS_PRELOAD = True             #Production
+# SECURE_HSTS_INCLUDE_SUBDOMAINS = True  #Production
+
+# SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
+# SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
+
 
 ROOT_URLCONF = 'Beauty_Cart.urls'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [TEMPLATES_DIR,],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -76,7 +109,7 @@ WSGI_APPLICATION = 'Beauty_Cart.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': BASE_DIR / 'beauty_ecom.sqlite3',
     }
 }
 
@@ -113,9 +146,17 @@ USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.1/howto/static-files/
+# https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [STATIC_DIRS,] #Added by User
+STATIC_ROOT = STATIC_FILES #By user for production
+
+
+#Media directory
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = "/media/"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
