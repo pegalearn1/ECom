@@ -1,0 +1,9 @@
+/venv/
+*.mdf
+*.ldf
+/backups/
+/build/
+/dist/
+*.log
+*.zip
+*.pdf
